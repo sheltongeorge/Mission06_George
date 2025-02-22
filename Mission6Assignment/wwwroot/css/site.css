@@ -17,6 +17,17 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1; /* Pushes the footer to the bottom only when needed */
+}
+
+footer {
+    margin-top: auto; /* Ensures the footer stays at the bottom */
+    text-align: center;
 }

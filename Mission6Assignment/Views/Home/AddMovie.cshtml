@@ -1,4 +1,5 @@
-﻿
+﻿@using Mission06_George.Models
+
 @model Mission6Assignment.Models.MovieApplication
 
 @{
@@ -15,26 +16,34 @@
 
 <h1>Add a Movie</h1>
 
-<form asp-action="AddMovie" method="post">
+<form asp-action="@(Model.MovieId == 0 ? "AddMovie" : "Edit")" method="post">
+    
+    <input type="hidden" asp-for="MovieId" />
+
+    <div class="form-group">
+        <label asp-for="CategoryId">Category</label>
+        <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "CategoryName", Model.CategoryId))"
+                class="form-control" required>
+            <option value="">Select a Category</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+                @* all the code above pulls in the relationship of foreign key to primary key of the two tables *@
     <div class="form-group">
         <label asp-for="Title">Title</label>
         <input asp-for="Title" class="form-control" required />
     </div>
     <div class="form-group">
-        <label asp-for="Category">Category</label>
-        <input asp-for="Category" class="form-control" required />
-    </div>
-    <div class="form-group">
         <label asp-for="Year">Year</label>
-        <input asp-for="Year" type="number" class="form-control" required />
+        <input asp-for="Year" type="number" class="form-control" min="1888" max="2035" required value="@(Model.Year == 0 ? "" : Model.Year)" />
     </div>
     <div class="form-group">
         <label asp-for="Director">Director</label>
-        <input asp-for="Director" class="form-control" required />
+        <input asp-for="Director" class="form-control" />
     </div>
     <div class="form-group">
         <label asp-for="Rating">Rating</label>
-        <select asp-for="Rating" class="form-control" required>
+        <select asp-for="Rating" class="form-control" >
             <option value="" disabled selected>Select</option>
             <option value="G">G</option>
             <option value="PG">PG</option>
@@ -44,10 +53,10 @@
     </div>
     <div class="form-group">
         <label asp-for="Edited">Edited</label>
-        <select asp-for="Edited" class="form-control">
+        <select asp-for="Edited" class="form-control" required>
             <option value="" disabled selected>Select</option>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
         </select>
     </div>
     <div class="form-group">
@@ -55,11 +64,21 @@
         <input asp-for="LentTo" class="form-control" />
     </div>
     <div class="form-group">
+        <label asp-for="CopiedToPlex">Copied To Plex</label>
+        <select asp-for="CopiedToPlex" class="form-control" required>
+            <option value="" disabled selected>Select</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+    </div>
+    <div class="form-group">
         <label asp-for="Notes">Notes (max 25 characters)</label>
         <input asp-for="Notes" class="form-control" maxlength="25" />
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Add Movie</button>
+    <button type="submit" class="btn btn-primary mt-3">Submit Movie</button>
+
+    <div asp-validation-summary="All"></div>
 </form>
 
 
