@@ -5,7 +5,7 @@ namespace Mission6Assignment.Models
 {
     public class MovieInputContext : DbContext
     {
-        public MovieInputContext(DbContextOptions<MovieInputContext> options) : base (options) { }
+        public MovieInputContext(DbContextOptions<MovieInputContext> options) : base (options) { } // constructor, called one time
         
         public DbSet<MovieApplication> Movies { get; set; } // name of the table in the databse
 
